@@ -23,9 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "AppDelegate.h"
-#include "MainScene.h"
-
+#include "Core/AppDelegate.h"
+#include "Core/MainScene.h"
+#include "Version.h"
+#include "axmol/axmol.h"
+#include "axmol/base/Logging.h"
 #define USE_VR_RENDERER  0
 #define USE_AUDIO_ENGINE 1
 
@@ -39,7 +41,7 @@
 
 using namespace ax;
 
-static ax::Size designResolutionSize = ax::Size(1280, 720);
+static ax::Size designResolutionSize = ax::Size(1024, 768);
 
 AppDelegate::AppDelegate() {}
 
@@ -98,16 +100,20 @@ bool AppDelegate::applicationDidFinishLaunching()
     renderView->setVR(std::move(vrRenderer));
 #endif
 
+#if (VERSION_MAJOR == 0)
+
+    AXLOGD(" Logs de la version:" VERSION_STRING);
+
     // turn on display FPS
     director->setStatsDisplay(true);
 
+#endif  // (VERSION_MAJOR == 0)
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
     renderView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
                                         ResolutionPolicy::SHOW_ALL);
-
     // create a scene. it's an autorelease object
     auto scene = utils::createInstance<MainScene>();
 

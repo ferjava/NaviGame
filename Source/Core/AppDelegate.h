@@ -24,50 +24,41 @@
  ****************************************************************************/
 
 #pragma once
-
 #include "axmol/axmol.h"
 
-class MainScene : public ax::Scene
+/**
+@brief    The axmol Application.
+
+Private inheritance here hides part of interface from Director.
+*/
+class AppDelegate : private ax::Application
 {
-    enum class GameState
-    {
-        init = 0,
-        update,
-        pause,
-        end,
-        menu1,
-        menu2,
-    };
-
 public:
-    bool init() override;
-    void update(float delta) override;
+    AppDelegate();
+    ~AppDelegate() override;
 
-    // touch
-    void onTouchesBegan(const std::vector<ax::Touch*>& touches, ax::Event* event);
-    void onTouchesMoved(const std::vector<ax::Touch*>& touches, ax::Event* event);
-    void onTouchesEnded(const std::vector<ax::Touch*>& touches, ax::Event* event);
+    void initContextAttrs() override;
 
-    // mouse
-    bool onMouseDown(ax::Event* event);
-    bool onMouseUp(ax::Event* event);
-    bool onMouseMove(ax::Event* event);
-    bool onMouseScroll(ax::Event* event);
+    /**
+    @brief    Implement Director and Scene init code here.
+    @return true    Initialize success, app continue.
+    @return false   Initialize failed, app terminate.
+    */
+    bool applicationDidFinishLaunching() override;
 
-    // Keyboard
-    void onKeyPressed(ax::EventKeyboard::KeyCode code, ax::Event* event);
-    void onKeyReleased(ax::EventKeyboard::KeyCode code, ax::Event* event);
+    /**
+    @brief  Called when the application moves to the background
+    */
+    void applicationDidEnterBackground() override;
 
-    // a selector callback
-    void menuCloseCallback(ax::Object* sender);
+    /**
+    @brief  Called when the application reenters the foreground
+    */
+    void applicationWillEnterForeground() override;
 
-    MainScene();
-    ~MainScene() override;
-
-private:
-    GameState _gameState                            = GameState::init;
-    ax::EventListenerTouchAllAtOnce* _touchListener = nullptr;
-    ax::EventListenerKeyboard* _keyboardListener    = nullptr;
-    ax::EventListenerMouse* _mouseListener          = nullptr;
-    int _sceneID                                    = 0;
+    /**
+    @brief Called when application will quit
+    @since axmol-2.10.0
+    */
+    void applicationWillQuit() override;
 };

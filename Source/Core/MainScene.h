@@ -26,40 +26,35 @@
 #pragma once
 
 #include "axmol/axmol.h"
-
-/**
-@brief    The axmol Application.
-
-Private inheritance here hides part of interface from Director.
-*/
-class AppDelegate : private ax::Application
+#include "entt/entity/fwd.hpp"
+#include "entt/entt.hpp"
+class MainScene : public ax::Scene
 {
+    enum class GameState
+    {
+        init = 0,
+        update,
+        pause,
+        end,
+        menu1,
+        menu2,
+    };
+
 public:
-    AppDelegate();
-    ~AppDelegate() override;
+    bool init() override;
+    void update(float delta) override;
 
-    void initContextAttrs() override;
+    // Keyboard
+    /* void onKeyPressed(ax::EventKeyboard::KeyCode code, ax::Event* event);
+     voidoid onKeyReleased(ax::EventKeyboard::KeyCode code, ax::Event* event);*/
 
-    /**
-    @brief    Implement Director and Scene init code here.
-    @return true    Initialize success, app continue.
-    @return false   Initialize failed, app terminate.
-    */
-    bool applicationDidFinishLaunching() override;
+    MainScene();
+    ~MainScene() override;
 
-    /**
-    @brief  Called when the application moves to the background
-    */
-    void applicationDidEnterBackground() override;
-
-    /**
-    @brief  Called when the application reenters the foreground
-    */
-    void applicationWillEnterForeground() override;
-
-    /**
-    @brief Called when application will quit
-    @since axmol-2.10.0
-    */
-    void applicationWillQuit() override;
+private:
+    GameState _gameState = GameState::init;
+    entt::registry _registro;  //< El mundo de entt
+    ax::EventListenerKeyboard* _keyboardListener = nullptr;
+    std::map<ax::EventKeyboard::KeyCode, bool> _keys;
+    int _sceneID = 0;
 };

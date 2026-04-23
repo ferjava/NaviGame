@@ -26,12 +26,12 @@
 cmake_minimum_required(VERSION 3.22...4.1)
 
 set(APP_NAME NaviGame)
-
 project(${APP_NAME}
-VERSION 0.0.0)
+VERSION 0.0.01)
 #NOTE: Mis Cambios
 #->
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_BUILD_TYPE debug)
 include(FetchContent)
 
 FetchContent_Declare(
@@ -43,7 +43,7 @@ FetchContent_MakeAvailable(entt)
 
 set(AX_ENABLE_PCH ON CACHE BOOL "Enable  precompiled headers" FORCE)
 find_program(CCACHE_PROGRAM ccache)
-if(CCACHE_PRORGAM)
+if(CCACHE_PROGRAM)
     set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE_PROGRAM})
     set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE_PROGRAM})
 endif()
