@@ -1,11 +1,21 @@
 * >[!NOTE]: Objetivos para cada version de NaviGame 
 
+#version 0.0.02:
+
+    - [V] Realizar una funcion para crear la entidad 
+    -     Crear una entidad bala (que contiene una circunferencia)
+    -     Administrar las imagenes desde el cache de axmol
+    -     Realizar excepciosnes para la carga de recursos
+    -     Realizar un counterbullet para no crear y destruir tanto 
+
+
 #Version 0.0.01:
-    - ~Modificar MainScene~
-    - ~Añadir las etiquetas y los sistemas de entt~
-    - ~Añadir un Sprite~
-    - ~Añadir movimineto al Sprite (AWSD)~
-    - Limitar el movimiento fuera de los bordes de la pantalla 
+
+    - [V] Modificar MainScene
+    - [V] Añadir las etiquetas y los sistemas de entt~
+    - [V] Añadir un Sprite~
+    - [V] Añadir movimineto al Sprite (AWSD)~
+    - [V] Limitar el movimiento fuera de los bordes de la pantalla 
     
 #Version 0.0.0:
 

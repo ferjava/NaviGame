@@ -1,12 +1,11 @@
 #include "sysAreaLimite.hpp"
-#include <cstdlib>
 #include "Components/Grafico.hpp"
-#include "Components/Jugador.hpp"
 #include "Components/Posicion.hpp"
+#include "Components/TagComponents.hpp"
 #include "entt/entt.hpp"
 void fjv::sysAreaLimite(entt::registry& regis, ax::Rect& area)
 {
-    auto view = regis.view<fjv::Jugador, fjv::Posicion, fjv::Grafico>();
+    auto view = regis.view<fjv::tagPlayer, fjv::Posicion, fjv::Grafico>();
     for (auto entidad : view)
     {
         auto sprite = view.get<fjv::Grafico>(entidad);

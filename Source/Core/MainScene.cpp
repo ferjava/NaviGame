@@ -24,10 +24,12 @@
  ****************************************************************************/
 
 #include "Core/MainScene.h"
+/*
 #include "Components/Grafico.hpp"
 #include "Components/Jugador.hpp"
 #include "Components/Posicion.hpp"
-#include "Components/Velicidad.hpp"
+#include "Components/TagComponents.hpp"
+#include "Components/Velicidad.hpp"*/
 #include "Systems/sysAreaLimite.hpp"
 #include "Systems/sysGrafico.hpp"
 #include "Systems/sysMovimiento.hpp"
@@ -37,6 +39,8 @@
 #include "axmol/base/EventKeyboard.h"
 #include "axmol/math/Rect.h"
 #include "axmol/math/Vec2.h"
+#include "Entities/EntitiesFactory.hpp"
+#include "Components/Components.hpp"
 using namespace ax;
 
 static int s_sceneID = 1000;
@@ -49,7 +53,10 @@ static void problemLoading(const char* filename)
         "Depending on how you compiled you might have to add 'Content/' in front of filenames in "
         "MainScene.cpp\n");
 }
-
+void setupRegistrySignals(entt::registry& reg)
+{
+    reg.on_destroy<fjv::Grafico>().connect<&fjv::onGraficoDestroy>();
+}
 // on "init" you need to initialize your instance
 bool MainScene::init()
 {
@@ -59,7 +66,7 @@ bool MainScene::init()
     {
         return false;
     }
-
+    setupRegistrySignals(_registro);
     auto visibleSize = _director->getVisibleSize();
     auto origin      = _director->getVisibleOrigin();
     auto safeArea    = _director->getSafeAreaRect();
@@ -70,23 +77,10 @@ bool MainScene::init()
     //    you may modify it.
     //
     /////////////////////////////
-    auto nave = ax::Sprite::create("images/Naveplayer1.png", ax::Rect{300, 0, 100, 90});
-    if (nave == nullptr)
-    {
-        problemLoading("Content/images/Naveplayer1");
-    }
-    else
-    {
-        nave->setScale(0.5, 0.5);
-        AXLOGD("La nave se cargo ");
-    }
-    addChild(nave);
+
     /// Creamos la entidad para la nave
-    auto mynave = _registro.create();
-    _registro.emplace<fjv::Posicion>(mynave, 300.0f, 300.0f);
-    _registro.emplace<fjv::Velocidad>(mynave, 0.0f, 0.0f);
-    _registro.emplace<fjv::Grafico>(mynave, nave, ax::Rect{0, 0, 0, 0});
-    _registro.emplace<fjv::Jugador>(mynave);
+    entiFactory::createPlayer(_registro, *this);
+
     AXLOGD("Hemos creado el entt de  la nave ");
     //
 

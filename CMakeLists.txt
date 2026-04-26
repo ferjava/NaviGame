@@ -30,8 +30,14 @@ project(${APP_NAME}
 VERSION 0.0.01)
 #NOTE: Mis Cambios
 #->
+# En tu CMakeLists.txt
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_BUILD_TYPE debug)
+set(CMAKE_BUILD_TYPE Debug)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(STATUS "Configurando AddressSanitizer para Debug...")
+    add_compile_options(-fsanitize=address -fno-omit-frame-pointer -g)
+    add_link_options(-fsanitize=address)
+endif()
 include(FetchContent)
 
 FetchContent_Declare(

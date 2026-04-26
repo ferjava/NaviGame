@@ -1,10 +1,10 @@
 #include "sysTeclasJugador.hpp"
-#include "Components/Jugador.hpp"
+#include "Components/TagComponents.hpp"
 #include "Components/Velicidad.hpp"
 #include "entt/entt.hpp"
 void fjv::sysTeclasJugador(entt::registry& regis, std::map<ax::EventKeyboard::KeyCode, bool>& key)
 {
-    auto view = regis.view<fjv::Jugador, fjv::Velocidad>();
+    auto view = regis.view<fjv::tagPlayer, fjv::Velocidad>();
     for (auto entidad : view)
     {
         auto& vel   = view.get<fjv::Velocidad>(entidad);
